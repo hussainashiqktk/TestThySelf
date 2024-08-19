@@ -4,13 +4,55 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     min-height: 100vh;
     color: #fff;
 }
 
+.navbar {
+    background-color: #0072ff;
+    padding: 10px 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: center; /* Center the navigation links */
+    align-items: center;
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.navbar ul li {
+    margin-right: 20px;
+}
+
+.navbar ul li a {
+    color: #ffffff; /* Ensures the text color is white */
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding: 10px 15px; /* Add padding to the link */
+    border-radius: 5px; /* Add slight rounding for better appearance */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+}
+
+.navbar ul li a:hover {
+    background-color: #0056b3; /* Changes the background on hover */
+    color: #ffffff; /* Keeps the text white on hover */
+}
+
+/* Ensure quiz container is below the navbar */
 .quiz-container {
+    margin-top: 70px; /* Adjust this value to fit below the fixed navbar */
     background: #ffffff;
     padding: 30px;
     border-radius: 15px;
@@ -162,60 +204,3 @@ li {
         padding: 8px 15px;
     }
 }
-
-/* Navigation Bar Styles */
-.navbar {
-    background-color: #0072ff;
-    padding: 10px 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-.navbar ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-}
-
-.navbar ul li {
-    margin-right: 20px;
-}
-
-.navbar ul li a {
-    color: black; /* Ensures the text color is white */
-    text-decoration: none;
-    font-size: 1.2rem;
-    font-weight: 500;
-    padding: 10px 15px; /* Add padding to the link */
-    border-radius: 5px; /* Add slight rounding for better appearance */
-    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
-}
-
-.navbar ul li a:hover {
-    background-color: #0056b3; /* Changes the background on hover */
-    color: #ffffff; /* Keeps the text white on hover */
-}
-
-/* Ensure quiz container is below the navbar */
-.quiz-container {
-    margin-top: 70px; /* Adjust this value if necessary */
-    background: #ffffff;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    width: 90%;
-    max-width: 700px;
-    text-align: center;
-    animation: fadeIn 1s ease-in-out;
-    color: #333;
-}
-
-
