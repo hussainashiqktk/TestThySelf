@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="quiz-container">
+        <form method="POST" action="{{ url_for('question', index=index) }}">
+            <div id="question">
+                <h3>{{ question['question'] }}</h3>
+            </div>
+            <div id="options">
+                {% for key, value in options.items() %}
+                <div class="option-card">
+                    <input type="radio" name="option" value="{{ key }}" id="option{{ key }}" required>
+                    <label for="option{{ key }}">{{ key }}. {{ value }}</label>
+                </div>
+                {% endfor %}
+            </div>
+            <button type="submit">Next</button>
+        </form>
+    </div>
+</body>
+</html>

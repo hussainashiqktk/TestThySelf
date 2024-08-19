@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="quiz-container">
+        <h2>Your Score: {{ score }}</h2>
+        <h3>Incorrect Questions:</h3>
+        <ul>
+            {% for index in incorrect_questions %}
+            <li>Question {{ index + 1 }}: {{ questions_df.iloc[index]['question'] }}</li>
+            {% endfor %}
+        </ul>
+        <a href="{{ url_for('index') }}" class="button">Retry</a>
+    </div>
+</body>
+</html>
