@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session, send_from_directory
 import pandas as pd
 import os
 
@@ -13,18 +13,37 @@ app.config['CSV_FOLDER'] = CSV_FOLDER
 def index():
     # List all CSV files in the 'questions' directory
     csv_files = [f for f in os.listdir(app.config['CSV_FOLDER']) if f.endswith('.csv')]
-    return render_template('index.html', files=csv_files)
+    return render_template('file_selection.html', files=csv_files)
 
 @app.route('/select_file/<filename>')
 def select_file(filename):
+    # Check if the selected file exists
     if filename not in os.listdir(app.config['CSV_FOLDER']):
         return redirect(url_for('index'))
 
+    # Store the selected file in the session
     session['current_file'] = filename
     session['score'] = 0
     session['incorrect_questions'] = []
 
     return redirect(url_for('question', index=0))
+
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        return redirect(url_for('index'))
+
+    file = request.files['file']
+    if file.filename == '':
+        return redirect(url_for('index'))
+
+    if file and file.filename.endswith('.csv'):
+        filename = file.filename
+        file_path = os.path.join(app.config['CSV_FOLDER'], filename)
+        file.save(file_path)
+        return redirect(url_for('index'))
+
+    return redirect(url_for('index'))
 
 @app.route('/question/<int:index>', methods=['GET', 'POST'])
 def question(index):
@@ -66,6 +85,9 @@ def question(index):
 
 @app.route('/result')
 def result():
+    if 'current_file' not in session:
+        return redirect(url_for('index'))
+
     # Load the questions from the selected CSV file
     questions_df = pd.read_csv(os.path.join(app.config['CSV_FOLDER'], session['current_file']))
 
@@ -74,24 +96,6 @@ def result():
     incorrect_questions = session.get('incorrect_questions', [])
 
     return render_template('result.html', score=f"{score}/{total_questions}", incorrect_questions=incorrect_questions, questions_df=questions_df)
-
-@app.route('/upload', methods=['POST'])
-def upload_file():
-    if 'file' not in request.files:
-        flash('No file part')
-        return redirect(request.url)
-    file = request.files['file']
-    if file.filename == '':
-        flash('No selected file')
-        return redirect(request.url)
-    if file and file.filename.endswith('.csv'):
-        filename = file.filename
-        file.save(os.path.join(app.config['CSV_FOLDER'], filename))
-        flash('File successfully uploaded')
-        return redirect(url_for('index'))
-    else:
-        flash('Allowed file types are .csv')
-        return redirect(request.url)
 
 if __name__ == '__main__':
     app.run("0.0.0.0", debug=True)
