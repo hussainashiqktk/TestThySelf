@@ -1,0 +1,10 @@
+question,optionA,optionB,optionC,optionD,correctAns
+"What is a Command and Control (C2) framework?", "A program that handles multiple reverse shells.", "A tool used to manage email servers.", "A server for web hosting.", "None of the above", "A"
+"What key feature distinguishes C2 frameworks from a basic Netcat listener?", "Advanced 'Post Exploitation' features.", "Higher data transfer speeds.", "Built-in firewall protection.", "None of the above", "A"
+"What does a C2 Server primarily do in a Command and Control framework?", "Acts as a hub for C2 Agents to call back to.", "Manages email communications.", "Hosts web applications.", "None of the above", "A"
+"What is the function of an Agent in a C2 Framework?", "Calls back to a C2 Server and performs tasks.", "Manages network traffic.", "Acts as a web server.", "None of the above", "A"
+"What is the purpose of using Sleep Timers in C2 operations?", "To create a predictable pattern for beaconing.", "To introduce variability in beaconing intervals.", "To ensure constant beaconing without delay.", "None of the above", "B"
+"What does Jitter add to a Sleep Timer in C2 operations?", "Consistent intervals between beacons.", "Randomness to the timing of beacons.", "Fixed delays between beacons.", "None of the above", "B"
+"What can advanced C2 frameworks alter besides Jitter?", "Traffic volume only.", "File size and data content.", "Protocols used by the server.", "None of the above", "B"
+"How does a Beacon function in a C2 Framework?", "It initiates a connection with a C2 Server.", "It encrypts data transmitted over the network.", "It logs user activity.", "None of the above", "A"
+"What is an example of a built-in feature of some C2 frameworks?", "Payload generator like MSFVenom.", "Network traffic analyzer.", "Web page editor.", "None of the above", "A"
