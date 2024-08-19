@@ -76,4 +76,4 @@ def result():
     return render_template('result.html', score=f"{score}/{total_questions}", incorrect_questions=incorrect_questions, questions_df=questions_df)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run("0.0.0.0", debug=True)
