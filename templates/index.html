@@ -3,44 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Home</title>
+    <title>Quiz</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <nav>
+    <nav class="navbar">
         <ul>
             <li><a href="{{ url_for('index') }}">Home</a></li>
         </ul>
     </nav>
-
-    <div class="container">
-        <h1>Welcome to the Quiz App</h1>
-
-        <!-- Display existing question files -->
-        <h2>Existing Question Files</h2>
-        <ul>
-            {% for file in files %}
-            <li><a href="{{ url_for('select_file', filename=file) }}">{{ file }}</a></li>
-            {% endfor %}
-        </ul>
-
-        <!-- Upload new question file -->
-        <h2>Upload New Question File</h2>
-        <form action="{{ url_for('upload_file') }}" method="POST" enctype="multipart/form-data">
-            <input type="file" name="file" accept=".csv" required>
-            <button type="submit">Upload</button>
+    <div class="quiz-container">
+        <form method="POST" action="{{ url_for('question', index=index) }}">
+            <div id="question">
+                <h3>{{ question['question'] }}</h3>
+            </div>
+            <div id="options">
+                {% for key, value in options.items() %}
+                <div class="option-card">
+                    <input type="radio" name="option" value="{{ key }}" id="option{{ key }}" required>
+                    <label for="option{{ key }}">{{ key }}. {{ value }}</label>
+                </div>
+                {% endfor %}
+            </div>
+            <button type="submit">Submit</button>
         </form>
-
-        <!-- Flash messages -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <ul class="flash-messages">
-                    {% for category, message in messages %}
-                        <li class="{{ category }}">{{ message }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        {% endwith %}
     </div>
 </body>
 </html>
