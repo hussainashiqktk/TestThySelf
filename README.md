@@ -4,6 +4,8 @@
 
 ```bash
 git clone https://github.com/hussainashiqktk/TestThySelf.git
+cd TestThySelf
+./setup.sh
 ```
 
 install dependencies
