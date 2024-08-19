@@ -5,6 +5,7 @@
 ```bash
 git clone https://github.com/hussainashiqktk/TestThySelf.git
 cd TestThySelf
+chmod +x setup.sh
 ./setup.sh
 ```
 
