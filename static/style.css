@@ -190,7 +190,7 @@ li {
 }
 
 .navbar ul li a {
-    color: #ffffff; /* Ensures the text color is white */
+    color: black; /* Ensures the text color is white */
     text-decoration: none;
     font-size: 1.2rem;
     font-weight: 500;
