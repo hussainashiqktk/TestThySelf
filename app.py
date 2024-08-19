@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, send_from_directory
+from flask import Flask, render_template, request, redirect, url_for, session
 import pandas as pd
 import os
 
@@ -17,11 +17,9 @@ def index():
 
 @app.route('/select_file/<filename>')
 def select_file(filename):
-    # Check if the selected file exists
     if filename not in os.listdir(app.config['CSV_FOLDER']):
         return redirect(url_for('index'))
 
-    # Store the selected file in the session
     session['current_file'] = filename
     session['score'] = 0
     session['incorrect_questions'] = []
@@ -47,12 +45,16 @@ def upload_file():
 
 @app.route('/question/<int:index>', methods=['GET', 'POST'])
 def question(index):
-    # Check if a file is selected
     if 'current_file' not in session:
         return redirect(url_for('index'))
 
-    # Load the questions from the selected CSV file
-    questions_df = pd.read_csv(os.path.join(app.config['CSV_FOLDER'], session['current_file']))
+    file_path = os.path.join(app.config['CSV_FOLDER'], session['current_file'])
+    
+    # Check if the file exists
+    if not os.path.exists(file_path):
+        return redirect(url_for('index'))
+    
+    questions_df = pd.read_csv(file_path)
 
     if index >= len(questions_df):
         return redirect(url_for('result'))
@@ -88,8 +90,13 @@ def result():
     if 'current_file' not in session:
         return redirect(url_for('index'))
 
-    # Load the questions from the selected CSV file
-    questions_df = pd.read_csv(os.path.join(app.config['CSV_FOLDER'], session['current_file']))
+    file_path = os.path.join(app.config['CSV_FOLDER'], session['current_file'])
+    
+    # Check if the file exists
+    if not os.path.exists(file_path):
+        return redirect(url_for('index'))
+    
+    questions_df = pd.read_csv(file_path)
 
     total_questions = len(questions_df)
     score = session.get('score', 0)
