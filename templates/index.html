@@ -5,22 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz App</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        function submitForm() {
+            document.getElementById("quizForm").submit();
+        }
+    </script>
 </head>
 <body>
     <div class="quiz-container">
-        <form method="POST" action="{{ url_for('question', index=index) }}">
+        <form id="quizForm" method="POST" action="{{ url_for('question', index=index) }}">
             <div id="question">
                 <h3>{{ question['question'] }}</h3>
             </div>
             <div id="options">
                 {% for key, value in options.items() %}
                 <div class="option-card">
-                    <input type="radio" name="option" value="{{ key }}" id="option{{ key }}" required>
+                    <input type="radio" name="option" value="{{ key }}" id="option{{ key }}" required onclick="submitForm()">
                     <label for="option{{ key }}">{{ key }}. {{ value }}</label>
                 </div>
                 {% endfor %}
             </div>
-            <button type="submit">Next</button>
         </form>
     </div>
 </body>
