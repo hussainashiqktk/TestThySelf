@@ -87,22 +87,21 @@ def question(index):
 
 @app.route('/result')
 def result():
+    # Check if a file is selected
     if 'current_file' not in session:
         return redirect(url_for('index'))
 
-    file_path = os.path.join(app.config['CSV_FOLDER'], session['current_file'])
-    
-    # Check if the file exists
-    if not os.path.exists(file_path):
-        return redirect(url_for('index'))
-    
-    questions_df = pd.read_csv(file_path)
+    # Load the questions from the selected CSV file
+    questions_df = pd.read_csv(os.path.join(app.config['CSV_FOLDER'], session['current_file']))
 
     total_questions = len(questions_df)
     score = session.get('score', 0)
     incorrect_questions = session.get('incorrect_questions', [])
 
-    return render_template('result.html', score=f"{score}/{total_questions}", incorrect_questions=incorrect_questions, questions_df=questions_df)
+    return render_template('result.html', 
+                           score=f"{score}/{total_questions}", 
+                           incorrect_questions=incorrect_questions, 
+                           questions_df=questions_df)
 
 if __name__ == '__main__':
     app.run("0.0.0.0", debug=True)
