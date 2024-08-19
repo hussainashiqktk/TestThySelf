@@ -6,7 +6,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     color: #fff;
 }
 
@@ -90,6 +90,7 @@ button {
     font-size: 1.5rem;
     margin-top: 20px;
     transition: background 0.3s ease, transform 0.2s ease;
+    width: 100%;
 }
 
 button:hover {
@@ -122,4 +123,42 @@ li {
     border-radius: 8px;
     margin: 10px 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    h3 {
+        font-size: 1.5rem;
+    }
+
+    #options {
+        grid-template-columns: 1fr; /* Single column on small screens */
+        gap: 10px;
+    }
+
+    .option-card {
+        padding: 15px;
+        font-size: 1rem;
+    }
+
+    button {
+        font-size: 1.2rem;
+        padding: 10px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .quiz-container {
+        padding: 20px;
+    }
+
+    .option-card {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    button {
+        font-size: 1rem;
+        padding: 8px 15px;
+    }
 }
