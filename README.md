@@ -5,8 +5,9 @@
 ```bash
 git clone https://github.com/hussainashiqktk/TestThySelf.git
 cd TestThySelf
-chmod +x setup.sh
-./setup.sh
+python3 -m venv venv
+source venv/bin/activate
+pip3 install Flask pandas
 ```
 
 install dependencies
