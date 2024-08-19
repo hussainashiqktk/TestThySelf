@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, send_from_directory
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 import pandas as pd
 import os
 
@@ -13,7 +13,7 @@ app.config['CSV_FOLDER'] = CSV_FOLDER
 def index():
     # List all CSV files in the 'questions' directory
     csv_files = [f for f in os.listdir(app.config['CSV_FOLDER']) if f.endswith('.csv')]
-    return render_template('file_selection.html', files=csv_files)
+    return render_template('index.html', files=csv_files)
 
 @app.route('/select_file/<filename>')
 def select_file(filename):
@@ -74,6 +74,24 @@ def result():
     incorrect_questions = session.get('incorrect_questions', [])
 
     return render_template('result.html', score=f"{score}/{total_questions}", incorrect_questions=incorrect_questions, questions_df=questions_df)
+
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        flash('No file part')
+        return redirect(request.url)
+    file = request.files['file']
+    if file.filename == '':
+        flash('No selected file')
+        return redirect(request.url)
+    if file and file.filename.endswith('.csv'):
+        filename = file.filename
+        file.save(os.path.join(app.config['CSV_FOLDER'], filename))
+        flash('File successfully uploaded')
+        return redirect(url_for('index'))
+    else:
+        flash('Allowed file types are .csv')
+        return redirect(request.url)
 
 if __name__ == '__main__':
     app.run("0.0.0.0", debug=True)
