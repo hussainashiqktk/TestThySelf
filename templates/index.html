@@ -5,13 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz App</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <script>
-        function submitForm() {
-            document.getElementById("quizForm").submit();
-        }
-    </script>
 </head>
 <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <!-- Add more links here if needed -->
+        </ul>
+    </nav>
+
     <div class="quiz-container">
         <form id="quizForm" method="POST" action="{{ url_for('question', index=index) }}">
             <div id="question">
@@ -27,5 +30,11 @@
             </div>
         </form>
     </div>
+
+    <script>
+        function submitForm() {
+            document.getElementById("quizForm").submit();
+        }
+    </script>
 </body>
 </html>
