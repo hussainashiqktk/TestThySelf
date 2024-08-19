@@ -3,19 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select Quiz File</title>
+    <title>File Selection</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+    <nav class="navbar">
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+        </ul>
+    </nav>
     <div class="file-selection-container">
         <h2>Select a Quiz File</h2>
         <ul>
             {% for file in files %}
-            <li>
-                <a href="{{ url_for('select_file', filename=file) }}">{{ file }}</a>
-            </li>
+            <li><a href="{{ url_for('select_file', filename=file) }}">{{ file }}</a></li>
             {% endfor %}
         </ul>
+        <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".csv" required>
+            <button type="submit">Upload CSV</button>
+        </form>
     </div>
 </body>
 </html>
