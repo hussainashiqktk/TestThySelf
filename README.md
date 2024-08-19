@@ -2,6 +2,10 @@
 
 # Installation
 
+```bash
+git clone https://github.com/hussainashiqktk/TestThySelf.git
+```
+
 install dependencies
 
 ```bash
