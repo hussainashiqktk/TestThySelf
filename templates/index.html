@@ -5,6 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const options = document.querySelectorAll('input[name="option"]');
+            options.forEach(option => {
+                option.addEventListener('change', function () {
+                    const form = this.closest('form');
+                    form.submit();
+                });
+            });
+        });
+
+        function nextQuestion() {
+            const currentContainer = document.querySelector('.quiz-container');
+            currentContainer.classList.add('hidden');
+
+            setTimeout(() => {
+                const form = document.querySelector('form');
+                const nextQuestionIndex = parseInt(form.querySelector('input[name="index"]').value, 10) + 1;
+
+                if (nextQuestionIndex < {{ total_questions }}) {
+                    window.location.href = `/question/${nextQuestionIndex}`;
+                } else {
+                    window.location.href = '/result';
+                }
+            }, 500);
+        }
+
+        window.addEventListener('load', () => {
+            const form = document.querySelector('form');
+            if (form) {
+                form.addEventListener('submit', () => {
+                    setTimeout(nextQuestion, 300);
+                });
+            }
+        });
+    </script>
 </head>
 <body>
     <nav class="navbar">
@@ -14,6 +50,7 @@
     </nav>
     <div class="quiz-container">
         <form method="POST" action="{{ url_for('question', index=index) }}">
+            <input type="hidden" name="index" value="{{ index }}">
             <div id="question">
                 <h3>{{ question['question'] }}</h3>
             </div>
@@ -25,7 +62,6 @@
                 </div>
                 {% endfor %}
             </div>
-            <button type="submit">Submit</button>
         </form>
     </div>
 </body>
