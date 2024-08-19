@@ -3,38 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz App</title>
+    <title>Quiz Home</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar">
+    <nav>
         <ul>
             <li><a href="{{ url_for('index') }}">Home</a></li>
-            <!-- Add more links here if needed -->
         </ul>
     </nav>
 
-    <div class="quiz-container">
-        <form id="quizForm" method="POST" action="{{ url_for('question', index=index) }}">
-            <div id="question">
-                <h3>{{ question['question'] }}</h3>
-            </div>
-            <div id="options">
-                {% for key, value in options.items() %}
-                <div class="option-card">
-                    <input type="radio" name="option" value="{{ key }}" id="option{{ key }}" required onclick="submitForm()">
-                    <label for="option{{ key }}">{{ key }}. {{ value }}</label>
-                </div>
-                {% endfor %}
-            </div>
+    <div class="container">
+        <h1>Welcome to the Quiz App</h1>
+
+        <!-- Display existing question files -->
+        <h2>Existing Question Files</h2>
+        <ul>
+            {% for file in question_files %}
+            <li><a href="{{ url_for('load_questions', filename=file) }}">{{ file }}</a></li>
+            {% endfor %}
+        </ul>
+
+        <!-- Upload new question file -->
+        <h2>Upload New Question File</h2>
+        <form action="{{ url_for('upload_file') }}" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".csv" required>
+            <button type="submit">Upload</button>
         </form>
     </div>
-
-    <script>
-        function submitForm() {
-            document.getElementById("quizForm").submit();
-        }
-    </script>
 </body>
 </html>
