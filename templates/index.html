@@ -10,35 +10,10 @@
             const options = document.querySelectorAll('input[name="option"]');
             options.forEach(option => {
                 option.addEventListener('change', function () {
-                    const form = this.closest('form');
-                    form.submit();
+                    // Submit the form when an option is selected
+                    this.closest('form').submit();
                 });
             });
-        });
-
-        function nextQuestion() {
-            const currentContainer = document.querySelector('.quiz-container');
-            currentContainer.classList.add('hidden');
-
-            setTimeout(() => {
-                const form = document.querySelector('form');
-                const nextQuestionIndex = parseInt(form.querySelector('input[name="index"]').value, 10) + 1;
-
-                if (nextQuestionIndex < {{ total_questions }}) {
-                    window.location.href = `/question/${nextQuestionIndex}`;
-                } else {
-                    window.location.href = '/result';
-                }
-            }, 500);
-        }
-
-        window.addEventListener('load', () => {
-            const form = document.querySelector('form');
-            if (form) {
-                form.addEventListener('submit', () => {
-                    setTimeout(nextQuestion, 300);
-                });
-            }
         });
     </script>
 </head>
